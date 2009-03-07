@@ -1,7 +1,7 @@
 Summary:        Utility for downloading files from Rapidshare
 Name:           slimrat
 Version:        0.9.2
-Release:        %mkrel 1
+Release:        %mkrel 2
 License:        MIT License
 Group:          Networking/WWW
 Source0:        http://slimrat.googlecode.com/files/%{name}-%{version}.tar.bz2
@@ -17,7 +17,7 @@ Requires:       perl(LWP::UserAgent)
 Requires:       perl(Term::ANSIColor)
 Requires:       perl(WWW::Mechanize)
 Requires:       wget
-BuildRoot:      %{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+BuildRoot:      %{_tmppath}/%{name}-%{version}-buildroot
 
 %description
 Command line and GUI utility for downloading files from Rapidshare
@@ -36,7 +36,7 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_bindir}
 install -d $RPM_BUILD_ROOT%{perl_vendorlib}/plugins
 install slimrat $RPM_BUILD_ROOT%{_bindir}
-%{__sed} -i -e 's,"+<\$quefile","+<"\,\ "\$quefile",' slimrat-gui
+sed -i -e 's,"+<\$quefile","+<"\,\ "\$quefile",' slimrat-gui
 install slimrat-gui $RPM_BUILD_ROOT%{_bindir}
 install Plugin.pm $RPM_BUILD_ROOT%{perl_vendorlib}
 install slimrat.glade $RPM_BUILD_ROOT%{perl_vendorlib}
