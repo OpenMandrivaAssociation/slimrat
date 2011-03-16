@@ -1,7 +1,7 @@
 Summary:        Utility for downloading files from Rapidshare
 Name:           slimrat
-Version:        0.9.2
-Release:        %mkrel 3
+Version:        0.9.5
+Release:        %mkrel 1
 License:        MIT License
 Group:          Networking/WWW
 Source0:        http://slimrat.googlecode.com/files/%{name}-%{version}.tar.bz2
