@@ -1,54 +1,51 @@
-Summary:        Utility for downloading files from Rapidshare
-Name:           slimrat
-Version:        0.9.5
-Release:        %mkrel 1
-License:        MIT License
-Group:          Networking/WWW
-Source0:        http://slimrat.googlecode.com/files/%{name}-%{version}.tar.bz2
-Patch0:         %{name}-youtube_plugin.patch
-Patch1:         %{name}-wget.patch
-URL:            http://code.google.com/p/slimrat/
-Requires:       perl-base
-Requires:       perl(Getopt::Long)
-Requires:       gtk+2
-Requires:       perl(Gtk2::GladeXML)
-Requires:       perl(Gtk2::SimpleList)
-Requires:       perl(LWP::UserAgent)
-Requires:       perl(Term::ANSIColor)
-Requires:       perl(WWW::Mechanize)
-Requires:       wget
-BuildRoot:      %{_tmppath}/%{name}-%{version}-buildroot
+%define beta beta2
+
+Summary:	Utility for downloading files from Rapidshare, Depositfiles etc
+Name:		slimrat
+Version:	1.1
+Release:	0.%{beta}.1
+License:	MIT License
+Group:		Networking/WWW
+URL:		http://code.google.com/p/slimrat/
+Source0:	http://slimrat.googlecode.com/files/%{name}-%{version}-%{beta}.tar.bz2
+Source1:	%{name}.desktop
+Source2:	%{name}.xpm
+Requires:	wget
+BuildArch:	noarch
 
 %description
 Command line and GUI utility for downloading files from Rapidshare
-(Free) on Linux. Written in perl, uses wget and GTK GUI.
+(Free), Depositfiles etc on Linux. Written in perl, uses wget and GTK GUI.
 
 %prep
-%setup -q
-#%patch0 -p1
-#%patch1 -p1
+%setup -q -n %{name}-%{version}-%{beta}
 
 %build
 
 %install
-rm -rf $RPM_BUILD_ROOT
+mkdir -p %{buildroot}%{_datadir}/%{name}
+cp -r src/* %{buildroot}%{_datadir}/%{name}
 
-install -d $RPM_BUILD_ROOT%{_bindir}
-install -d $RPM_BUILD_ROOT%{perl_vendorlib}/plugins
-install slimrat $RPM_BUILD_ROOT%{_bindir}
-sed -i -e 's,"+<\$quefile","+<"\,\ "\$quefile",' slimrat-gui
-install slimrat-gui $RPM_BUILD_ROOT%{_bindir}
-install Plugin.pm $RPM_BUILD_ROOT%{perl_vendorlib}
-install slimrat.glade $RPM_BUILD_ROOT%{perl_vendorlib}
-install plugins/*.pm $RPM_BUILD_ROOT%{perl_vendorlib}/plugins
+mkdir -p %{buildroot}%{_bindir}
+pushd %{buildroot}%{_bindir}
+ln -s ../../%{_datadir}/%{name}/%{name} %{name}
+ln -s ../../%{_datadir}/%{name}/%{name}-gui %{name}-gui
+popd
 
-%clean
-rm -rf $RPM_BUILD_ROOT
+mkdir -p %{buildroot}%{_sysconfdir}
+install -m 0644 %{name}.conf %{buildroot}%{_sysconfdir}
+
+mkdir -p %{buildroot}%{_datadir}/applications
+install -m 0644 %{SOURCE1} %{buildroot}%{_datadir}/applications
+
+mkdir -p %{buildroot}%{_datadir}/pixmaps
+install -m 0644 %{SOURCE2} %{buildroot}%{_datadir}/pixmaps
 
 %files
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/*
-%dir %{perl_vendorlib}/plugins
-%{perl_vendorlib}/Plugin.pm
-%{perl_vendorlib}/slimrat.glade
-%{perl_vendorlib}/plugins/*.pm
+%{_bindir}/%{name}
+%{_bindir}/%{name}-gui
+%config(noreplace) %{_sysconfdir}/%{name}.conf
+%{_datadir}/%{name}/*
+%{_datadir}/applications/%{name}.desktop
+%{_datadir}/pixmaps/%{name}.xpm
+

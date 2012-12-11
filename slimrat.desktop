@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Slimrat
+Comment=Download files from various hosters
+GenericName=File Downloader
+Categories=GTK;Network;
+Exec=slimrat-gui %U
+Icon=slimrat
+Terminal=false
+Type=Application
+StartupNotify=true
