@@ -6,7 +6,7 @@ Version:	1.1
 Release:	0.%{beta}.1
 License:	MIT License
 Group:		Networking/WWW
-URL:		http://code.google.com/p/slimrat/
+URL:		https://code.google.com/p/slimrat/
 Source0:	http://slimrat.googlecode.com/files/%{name}-%{version}-%{beta}.tar.bz2
 Source1:	%{name}.desktop
 Source2:	%{name}.xpm
